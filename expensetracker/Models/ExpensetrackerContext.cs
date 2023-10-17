@@ -31,6 +31,12 @@ public partial class ExpensetrackerContext : expensetrackerIdentityContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<AspNetUserLogin>()
+       .HasKey(login => new { login.LoginProvider, login.ProviderKey });
+
+        modelBuilder.Entity<AspNetUserToken>()
+       .HasKey(login => new { login.LoginProvider, login.UserId,login.Name });
+
         modelBuilder.Entity<Budget>(entity =>
         {
             entity.ToTable("budgets");
@@ -45,6 +51,14 @@ public partial class ExpensetrackerContext : expensetrackerIdentityContext
                 .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.ExpenseId).HasColumnName("expense_id");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(450)
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Budgets)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_budgets_aspnetuser");
         });
 
         modelBuilder.Entity<Expense>(entity =>
@@ -65,11 +79,19 @@ public partial class ExpensetrackerContext : expensetrackerIdentityContext
             entity.Property(e => e.ExpenseCategory).HasColumnName("expense_category");
             entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.Recurring).HasColumnName("recurring");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(450)
+                .HasColumnName("user_id");
 
             entity.HasOne(d => d.ExpenseCategoryNavigation).WithMany(p => p.Expenses)
                 .HasForeignKey(d => d.ExpenseCategory)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_expenses_expense_categories");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Expenses)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_expenses_aspnetuser");
         });
 
         modelBuilder.Entity<ExpenseCategory>(entity =>
@@ -100,11 +122,19 @@ public partial class ExpensetrackerContext : expensetrackerIdentityContext
             entity.Property(e => e.IncomeCategory).HasColumnName("income_category");
             entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.Recurring).HasColumnName("recurring");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(450)
+                .HasColumnName("user_id");
 
             entity.HasOne(d => d.IncomeCategoryNavigation).WithMany(p => p.Incomes)
                 .HasForeignKey(d => d.IncomeCategory)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_incomes_income_categories");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Incomes)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_incomes_aspnetuser");
         });
 
         modelBuilder.Entity<IncomeCategory>(entity =>

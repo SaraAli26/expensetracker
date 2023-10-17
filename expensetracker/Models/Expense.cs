@@ -1,4 +1,5 @@
-﻿using System;
+﻿using expensetracker.Models;
+using System;
 using System.Collections.Generic;
 
 namespace expensetracker.Models;
@@ -21,5 +22,9 @@ public partial class Expense
 
     public bool Recurring { get; set; }
 
+    public string UserId { get; set; } = null!;
+
     public virtual ExpenseCategory ExpenseCategoryNavigation { get; set; } = null!;
+
+    public virtual AspNetUser User { get; set; } = null!;
 }
