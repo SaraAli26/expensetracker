@@ -14,8 +14,14 @@ namespace expensetracker.Services
 
         public List<ExpenseCategory> GetExpenseCategoriesList()
         {
-            var catgeoris = _context.ExpenseCategories.ToList();
-            return catgeoris;
+            var expenseCatgeoris = _context.ExpenseCategories.ToList();
+            return expenseCatgeoris;
+        }
+
+        public List<IncomeCategory> GetIncomeCategoriesList()
+        {
+            var incomeCatgeoris = _context.IncomeCategories.ToList();
+            return incomeCatgeoris;
         }
     }
 

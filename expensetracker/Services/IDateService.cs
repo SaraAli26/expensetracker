@@ -7,5 +7,7 @@ namespace expensetracker.Services
     {
         List<ExpenseCategory> GetExpenseCategoriesList();
 
+        List<IncomeCategory> GetIncomeCategoriesList();
+
     }
 }

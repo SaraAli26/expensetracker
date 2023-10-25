@@ -1,0 +1,72 @@
+﻿@page
+@model expensetracker.Pages.Expenses.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Expense</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Expense.Id" class="control-label"></label>
+                <input asp-for="Expense.Id" class="form-control" />
+                <span asp-validation-for="Expense.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expense.Name" class="control-label"></label>
+                <input asp-for="Expense.Name" class="form-control" />
+                <span asp-validation-for="Expense.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expense.Description" class="control-label"></label>
+                <input asp-for="Expense.Description" class="form-control" />
+                <span asp-validation-for="Expense.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expense.Amount" class="control-label"></label>
+                <input asp-for="Expense.Amount" class="form-control" />
+                <span asp-validation-for="Expense.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expense.DateOfSepnding" class="control-label"></label>
+                <input asp-for="Expense.DateOfSepnding" class="form-control" />
+                <span asp-validation-for="Expense.DateOfSepnding" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expense.ExpenseCategory" class="control-label"></label>
+                <select asp-for="Expense.ExpenseCategory" class ="form-control" asp-items="ViewBag.ExpenseCategory"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Expense.Asset" /> @Html.DisplayNameFor(model => model.Expense.Asset)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Expense.Recurring" /> @Html.DisplayNameFor(model => model.Expense.Recurring)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expense.UserId" class="control-label"></label>
+                <select asp-for="Expense.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
